@@ -16,18 +16,18 @@ Used to get construction info.
 
 **Content return types**
 
-```ts
+```kotlin
 interface Construction {
-    time: string;
-    wikiUrl: string;
-    ships: string[];
+    val time: String
+    val wikiUrl: String
+    val ships: List<String>
 }
 
 interface Response {
-    statusCode: number;
-    statusMessage: string;
-    message: string;
-    construction: Construction;
+    val statusCode: Int
+    val statusMessage: String
+    val message: String
+    val construction: Construction
 }
 ```
 
@@ -39,12 +39,12 @@ interface Response {
 
 **Content return types** :
 
-```ts
+```kotlin
 interface ErrorResponse {
-    statusCode: number;
-    statusMessage: string;
-    message: string;
-    error: string;
+    val statusCode: Int
+    val statusMessage: String
+    val message: String
+    val error: String?
 }
 ```
 
@@ -54,10 +54,11 @@ interface ErrorResponse {
 
 **Content return types** :
 
-```ts
+```kotlin
 interface ErrorResponse {
-    statusCode: number;
-    statusMessage: string;
-    message: string;
+    val statusCode: Int
+    val statusMessage: String
+    val message: String
+    val error: String?
 }
 ```

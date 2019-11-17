@@ -21,17 +21,17 @@ Used to get ships from a specific rarity, type or affiliation.
 **Content return types**
 
 [https://azurlane-api.herokuapp.com/v2/ships?orderBy=affiliation&affiliation=Sardegna%20Empire](https://azurlane-api.herokuapp.com/v2/ships?orderBy=affiliation&affiliation=Sardegna%20Empire)
-```ts
+```kotlin
 interface Ship {
-    id: string;
-    name: string;
+    val id: String
+    val name: String
 }
 
 interface Response {
-    statusCode: number;
-    statusMessage: string;
-    message: string;
-    ships: Array<Ship>;
+    val statusCode: Int
+    val statusMessage: String
+    val message: String
+    val ships: List<Ship>
 }
 
 ```
@@ -44,12 +44,12 @@ interface Response {
 
 **Content return types** :
 
-```ts
+```kotlin
 interface ErrorResponse {
-    statusCode: number;
-    statusMessage: string;
-    message: string;
-    error: string;
+    val statusCode: Int
+    val statusMessage: String
+    val message: String
+    val error: String?
 }
 ```
 
@@ -59,10 +59,11 @@ interface ErrorResponse {
 
 **Content return types** :
 
-```ts
+```kotlin
 interface ErrorResponse {
-    statusCode: number;
-    statusMessage: string;
-    message: string;
+    val statusCode: Int
+    val statusMessage: String
+    val message: String
+    val error: String?
 }
 ```

@@ -18,66 +18,74 @@ Used to get ship info.
 
 **Content return types**
 
-```ts
-interface NamesData {
-    en: string | null;
-    cn: string | null;
-    jp: string | null;
-    kr: string | null;
+```kotlin
+interface Names {
+    val en: String?
+    val cn: String?
+    val jp: String?
+    val kr: String?
 }
 
-interface SkinData {
-    title: string | null;
-    image: string | null;
-    chibi: string | null;
+interface Skin {
+    val title: String?
+    val image: String?
+    val chibi: String?
 }
 
-interface StatData {
-    name: string | null;
-    image: string | null;
-    value: string | null;
+interface Stars {
+    val value: String? // example: ★★★☆☆☆
+    val count: Int
+}
+
+interface Stat {
+    val name: String?
+    val image: String?
+    val value: String?
+}
+
+interface Stats {
+    val level100: List<Stat>?
+    val level120: List<Stat>?
+    val base: List<Stat>?
+    val retrofit100: List<Stat>?
+    val retrofit120: List<Stat>?
 }
 
 interface MiscellaneousData {
-    link: string | null;
-    name: string | null;
+    val link: String?
+    val name: String?
+}
+
+interface Miscellaneous {
+    val artist: MiscellaneousData?
+    val web: MiscellaneousData?
+    val pixiv: MiscellaneousData?
+    val twitter: MiscellaneousData?
+    val voiceActress: MiscellaneousData?
+}
+
+interface Ship {
+    val wikiUrl: String
+    val id: String?
+    val names: Names
+    val thumbnail: String
+    val skins: List<Skin>
+    val buildTime: String?
+    val rarity: String
+    val stars: Stars
+    val `class`: String?
+    val nationality: String?
+    val nationalityShort: String?
+    val hullType: String?
+    val stats: Stats,
+    val miscellaneous: Miscellaneous
 }
 
 interface Response {
-    statusCode: number;
-    statusMessage: string;
-    message: string;
-    ship: {
-        wikiUrl: string;
-        id: string | null;
-        names: NamesData;
-        thumbnail: string;
-        skins: Array<SkinData>;
-        buildTime: string | null;
-        rarity: string;
-        stars: {
-            value: string | null; // example: ★★★☆☆☆
-            count: number
-        };
-        class: string | null;
-        nationality: string | null;
-        nationalityShort: string | null;
-        hullType: string | null;
-        stats: {
-            100: Array<StatData> | null;
-            120: Array<StatData> | null;
-            base: Array<StatData> | null;
-            retrofit100: Array<StatData> | null;
-            retrofit120: Array<StatData> | null;
-        },
-        miscellaneous: {
-            artist: MiscellaneousData | null;
-            web: MiscellaneousData | null;
-            pixiv: MiscellaneousData | null;
-            twitter: MiscellaneousData | null;
-            voiceActress: MiscellaneousData | null;
-        };
-    };
+    val statusCode: Int
+    val statusMessage: String
+    val message: String
+    val ship: Ship
 }
 ```
 
@@ -89,12 +97,12 @@ interface Response {
 
 **Content return types** :
 
-```ts
+```kotlin
 interface ErrorResponse {
-    statusCode: number;
-    statusMessage: string;
-    message: string;
-    error: string;
+    val statusCode: Int
+    val statusMessage: String
+    val message: String
+    val error: String?
 }
 ```
 
@@ -104,10 +112,11 @@ interface ErrorResponse {
 
 **Content return types** :
 
-```ts
+```kotlin
 interface ErrorResponse {
-    statusCode: number;
-    statusMessage: string;
-    message: string;
+    val statusCode: Int
+    val statusMessage: String
+    val message: String
+    val error: String?
 }
 ```

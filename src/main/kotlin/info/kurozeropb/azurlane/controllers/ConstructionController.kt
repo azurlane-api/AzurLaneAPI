@@ -31,7 +31,7 @@ object ConstructionController {
             ctx.status(500).json(ErrorResponse(
                 statusCode = 500,
                 statusMessage = "Internal Server Error",
-                message = "Something bad happened when fetching the construction data",
+                message = "The server encountered an unexpected condition that prevented it from fulfilling the request",
                 error = e.stackTrace.joinToString("\n")
             ))
             return

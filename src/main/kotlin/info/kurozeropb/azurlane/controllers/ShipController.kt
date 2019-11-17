@@ -51,14 +51,36 @@ object ShipController {
             name = "Jeanne d'Arc"
         }
 
+        val isValid = try {
+            validateShip(name.split("_").joinToString(" "))
+        } catch(e: Exception) {
+            e.printStackTrace()
+            ctx.status(500).json(ErrorResponse(
+                statusCode = 500,
+                statusMessage = "Internal Server Error",
+                message = "The server encountered an unexpected condition that prevented it from fulfilling the request",
+                error = e.stackTrace.joinToString("\n")
+            ))
+            return
+        }
+
+        if (!isValid) {
+            ctx.status(400).json(ErrorResponse(
+                statusCode = 400,
+                statusMessage = "Bad Request",
+                message = "Invalid ship name"
+            ))
+            return
+        }
+
         val data = try {
-            scrapeHtmlForShipData(name)
+            findShip(name)
         } catch (e: Exception) {
             e.printStackTrace()
             ctx.status(500).json(ErrorResponse(
                 statusCode = 500,
                 statusMessage = "Internal Server Error",
-                message = "Something bad happened when fetching the ship data",
+                message = "The server encountered an unexpected condition that prevented it from fulfilling the request",
                 error = e.stackTrace.joinToString("\n")
             ))
             return
@@ -92,7 +114,35 @@ object ShipController {
             }
         }
 
-    private fun scrapeHtmlForShipData(ship: String) =
+    private fun validateShip(name: String): Boolean =
+        skrape {
+            url = "${Config.baseUrl}/List_of_Ships"
+            mode = Mode.DOM
+            method = Method.GET
+            followRedirects = true
+            userAgent = Config.userAgent
+
+            extract {
+                htmlDocument {
+                    val elements = getElementsContainingOwnText(name)
+                    if (elements.isNullOrEmpty()) {
+                        false
+                    } else {
+                        val element = elements.first()
+                        val index = element.parent().parent().children().indexOf(element.parent())
+                        val table = element.parent().parent().parent()
+                        val title = table.child(0).child(if (index > 3) index + 1 else index)
+                        if (title.text() != "Name") {
+                            false
+                        } else {
+                            element.text().trim() == name && element.attr("title").trim() == name
+                        }
+                    }
+                }
+            }
+        }
+
+    private fun findShip(ship: String): Ship =
         skrape {
             url = "${Config.baseUrl}/$ship"
             mode = Mode.DOM
@@ -111,9 +161,9 @@ object ShipController {
                         val child = element.children().find { c -> c.className().contains("adaptiveratioimg") }
                         if (child != null) {
                             var skinChibi: String? = null
-                            var chibi = chibis[index].attr("src").split("/")
-                            if (chibi.isNotEmpty()) {
-                                chibi = chibi.dropLast(1)
+                            var chibi = if (chibis.isNullOrEmpty()) null else chibis[index].attr("src").split("/")
+                            if (chibi.isNullOrEmpty().not()) {
+                                chibi = chibi!!.dropLast(1)
                                 skinChibi = Config.baseUrl + chibi.joinToString("/").replace("/thumb", "")
                             }
 
@@ -218,8 +268,13 @@ object ShipController {
                         val children = el.children().filter { e -> e.tagName() == "td" }
                         if (children.count() >= 2) {
                             val title = children[0].text().replace("\n", "")
-                            val link = if (children[1].child(0).attr("href").startsWith("/Artist")) "${Config.baseUrl}${children[1].child(0).attr("href")}" else children[1].child(0).attr("href")
-                            val name = children[1].child(0).text()
+                            var link: String? = null
+                            var name: String? = null
+
+                            if (children[1].children().count() >= 1 ) {
+                                link = if (children[1].child(0).attr("href").startsWith("/Artist")) "${Config.baseUrl}${children[1].child(0).attr("href")}" else children[1].child(0).attr("href")
+                                name = children[1].child(0).text()
+                            }
 
                             when (title.toLowerCase()) {
                                 "artist" -> miscellaneous.artist = MiscellaneousData(link, name)
@@ -229,11 +284,15 @@ object ShipController {
                                 "voice actress" -> {
                                     val actress = try {
                                         a { withClass = "extiw"; findFirst { this } }
-                                    } catch (e: ElementNotFoundException) {
-                                        a { withClasses = listOf("external", "text"); withAttribute = Pair("rel", "nofollow"); findByIndex(3) { this } }
+                                    } catch (error: ElementNotFoundException) {
+                                        try {
+                                            a { withClasses = listOf("external", "text"); withAttribute = Pair("rel", "nofollow"); findByIndex(3) { this } }
+                                        } catch (e: ElementNotFoundException) {
+                                            null
+                                        }
                                     }
 
-                                    miscellaneous.voiceActress = MiscellaneousData(actress.attr("href"), actress.text())
+                                    miscellaneous.voiceActress = MiscellaneousData(actress?.attr("href"), actress?.text())
                                 }
                             }
                         }
@@ -243,14 +302,14 @@ object ShipController {
                         wikiUrl = "${Config.baseUrl}/${ship}",
                         id = shipId,
                         names = Names(
-                            en = div { withClass = "azl_box_title"; findFirst { text() } },
-                            cn = span { withAttribute = Pair("lang", "zh"); findFirst { text() } },
-                            jp = span { withAttribute = Pair("lang", "ja"); findFirst { text() } },
-                            kr = span { withAttribute = Pair("lang", "ko"); findFirst { text() } }
+                            en = try { div { withClass = "azl_box_title"; findFirst { text() } } } catch (e: Exception) { null },
+                            cn = try { span { withAttribute = Pair("lang", "zh"); findFirst { text() } } } catch (e: Exception) { null },
+                            jp = try { span { withAttribute = Pair("lang", "ja"); findFirst { text() } } } catch (e: Exception) { null },
+                            kr = try { span { withAttribute = Pair("lang", "ko"); findFirst { text() } } } catch (e: Exception) { null }
                         ),
-                        thumbnail = "${Config.baseUrl}/" + a { withAttribute = Pair("href", "/File:${ship}Icon.png"); findFirst { child(0) } }.attr("src"),
+                        thumbnail = "${Config.baseUrl}/" + try { a { withAttribute = Pair("href", "/File:${ship}Icon.png"); findFirst { child(0).attr("src") } } } catch (e: Exception) { null },
                         skins = skins,
-                        buildTime = a { withAttribute = Pair("href", "/${ship}#Construction"); findFirst { text() } },
+                        buildTime = try { a { withAttribute = Pair("href", "/${ship}#Construction"); findFirst { text() } } } catch (e: Exception) { null },
                         rarity = getElementsContainingOwnText("☆").first()?.child(0)?.attr("title"),
                         stars = Stars(
                             value = getElementsContainingOwnText("☆").first()?.text(),

@@ -5,10 +5,10 @@ Used to get ships from a specific rarity, type or affiliation.
 **URL** : `/ships`
 
 **URL Parameters** :
-- `orderBy=[string]` can be one of `rarity`, `type` or `affiliation`.
-- `rarity=[string]` depending on what you used in orderBy, this is which rarity.
-- `type=[string]` depending on what you used in orderBy, this is which type.
-- `affiliation=[string]` depending on what you used in orderBy, this is which affiliation.
+- `category=[string]` can be one of `rarity`, `type` or `affiliation`.
+- `rarity=[string]` depending on what you used in category, this is which rarity.
+- `type=[string]` depending on what you used in category, this is which type.
+- `affiliation=[string]` depending on what you used in category, this is which affiliation.
 
 **Method** : `GET`
 
@@ -20,7 +20,7 @@ Used to get ships from a specific rarity, type or affiliation.
 
 **Content return types**
 
-[https://azurlane-api.herokuapp.com/v2/ships?orderBy=affiliation&affiliation=Sardegna%20Empire](https://azurlane-api.herokuapp.com/v2/ships?orderBy=affiliation&affiliation=Sardegna%20Empire)
+[https://azurlane-api.herokuapp.com/v2/ships?category=affiliation&affiliation=Sardegna%20Empire](https://azurlane-api.herokuapp.com/v2/ships?category=affiliation&affiliation=Sardegna%20Empire)
 ```kotlin
 interface Ship {
     val id: String

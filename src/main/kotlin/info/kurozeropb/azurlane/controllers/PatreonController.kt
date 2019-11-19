@@ -35,6 +35,8 @@ object PatreonController {
     private fun mailToken(email: String, token: String) {
         val prop = Properties()
         prop["mail.smtp.auth"] = true
+        prop["mail.transport.protocol"] = "smtp"
+        prop["mail.host"] = "mail.kurozeropb.info"
         prop["mail.smtp.starttls.enable"] = "true"
         prop["mail.smtp.host"] = "mail.kurozeropb.info"
         prop["mail.smtp.port"] = "587"
@@ -137,7 +139,7 @@ object PatreonController {
             }
             "members:delete" -> {
                 // Disable/Delete member (not sure yet)
-                DatabaseManager.users.findOneAndUpdate(Patron::id eq user.id, setValue(Patron::enabled, false))
+                DatabaseManager.users.findOneAndDelete(Patron::id eq user.id)
             }
             "members:pledge:create" -> {
                 // Create token for member

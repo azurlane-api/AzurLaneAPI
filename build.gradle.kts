@@ -45,6 +45,7 @@ dependencies {
     implementation("org.litote.kmongo:kmongo:3.11.1")
     implementation("io.github.cdimascio:java-dotenv:5.1.3")
     implementation("com.google.code.gson:gson:2.8.6")
+    implementation("javax.mail:mail:1.5.0-b01")
 }
 
 tasks.withType<KotlinCompile> {

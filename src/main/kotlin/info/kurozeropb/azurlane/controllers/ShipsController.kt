@@ -1,5 +1,6 @@
 package info.kurozeropb.azurlane.controllers
 
+import info.kurozeropb.azurlane.API
 import info.kurozeropb.azurlane.Config
 import info.kurozeropb.azurlane.structures.*
 import io.javalin.http.Context
@@ -18,6 +19,16 @@ enum class Category(val string: String) {
 object ShipsController {
 
     fun getShips(ctx: Context) {
+        val authorized = API.authorize(ctx)
+        if (!authorized) {
+            ctx.status(401).json(ErrorResponse(
+                statusCode = 401,
+                statusMessage = "Unauthorized",
+                message = "Invalid authorization token, to get a valid token donate to https://patreon.com/Kurozero"
+            ))
+            return
+        }
+
         val category = ctx.queryParam("category")
         if (category.isNullOrBlank()) {
             ctx.status(400).json(ErrorResponse(

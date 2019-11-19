@@ -5,10 +5,15 @@ import info.kurozeropb.azurlane.controllers.PatreonController
 import info.kurozeropb.azurlane.controllers.ShipController
 import info.kurozeropb.azurlane.controllers.ShipsController
 import info.kurozeropb.azurlane.managers.DatabaseManager
+import info.kurozeropb.azurlane.structures.Patron
 import io.github.cdimascio.dotenv.Dotenv
 import io.github.cdimascio.dotenv.dotenv
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.Javalin
+import io.javalin.core.util.Header
+import io.javalin.http.Context
+import org.litote.kmongo.eq
+import org.litote.kmongo.findOne
 
 lateinit var dotenv: Dotenv
 
@@ -47,7 +52,7 @@ object API {
 
             post("/patreon", PatreonController::handleRequest)
 
-            path("v1") {
+            path("/v1") {
                 get { ctx ->
                     ctx.status(200).json(object {
                         val statusCode = 200
@@ -90,5 +95,11 @@ object API {
                 get("/ships", ShipsController::getShips)
             }
         }
+    }
+
+    fun authorize(ctx: Context): Boolean {
+        val token = ctx.header(Header.AUTHORIZATION) ?: return false
+        DatabaseManager.users.findOne(Patron::token eq token) ?: return false
+        return true
     }
 }

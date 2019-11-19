@@ -1,19 +1,29 @@
 package info.kurozeropb.azurlane
 
 import info.kurozeropb.azurlane.controllers.ConstructionController
+import info.kurozeropb.azurlane.controllers.PatreonController
 import info.kurozeropb.azurlane.controllers.ShipController
 import info.kurozeropb.azurlane.controllers.ShipsController
+import info.kurozeropb.azurlane.managers.DatabaseManager
+import io.github.cdimascio.dotenv.Dotenv
+import io.github.cdimascio.dotenv.dotenv
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.Javalin
+
+lateinit var dotenv: Dotenv
 
 object API {
 
     @JvmStatic
     fun main(args: Array<String>) {
+        dotenv = dotenv()
+
         val app = Javalin.create().apply {
             exception(Exception::class.java) { e, _ -> e.printStackTrace() }
             error(404) { ctx -> ctx.json("not found") }
-        }.start(System.getenv("PORT")?.toInt() ?: 8080)
+        }.start(dotenv["PORT"]?.toInt() ?: 8080)
+
+        DatabaseManager.initialize()
 
         app.routes {
 
@@ -32,6 +42,8 @@ object API {
                     )
                 })
             }
+
+            get("/patreon", PatreonController::handleRequest)
 
             path("v1") {
                 get { ctx ->

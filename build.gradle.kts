@@ -42,6 +42,8 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:1.8.0-beta4")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.10.0")
     implementation("it.skrape:skrapeit-core:1.0.0-alpha1")
+    implementation("org.litote.kmongo:kmongo:3.11.1")
+    implementation("io.github.cdimascio:java-dotenv:5.1.3")
 }
 
 tasks.withType<KotlinCompile> {

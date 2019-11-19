@@ -1,9 +1,9 @@
 package info.kurozeropb.azurlane
 
 object Config {
-    val version = "2.0.0"
-    val baseUrl = "https://azurlane.koumakan.jp"
-    val userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"
+    const val version = "2.0.0"
+    const val baseUrl = "https://azurlane.koumakan.jp"
+    const val userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"
 
     val capitalizeAll = listOf(
         "Mkii",

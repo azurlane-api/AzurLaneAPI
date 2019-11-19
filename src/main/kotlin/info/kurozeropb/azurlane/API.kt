@@ -16,7 +16,9 @@ object API {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        dotenv = dotenv()
+        dotenv = dotenv {
+            ignoreIfMissing = true
+        }
 
         val app = Javalin.create().apply {
             exception(Exception::class.java) { e, _ -> e.printStackTrace() }

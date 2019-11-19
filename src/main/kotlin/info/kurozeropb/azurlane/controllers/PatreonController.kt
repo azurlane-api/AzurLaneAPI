@@ -44,6 +44,16 @@ object PatreonController {
             return
         }
 
+        /** @TODO
+         * - Generate token and save to database
+         * - Send webhook with generated token and user info
+         */
+
+        when (trigger) {
+            "members:pledge:create" -> createToken()
+            "members:pledge:delete" -> deleteToken()
+        }
+
         println(trigger)
         println(body)
         ctx.status(200).json(ErrorResponse(

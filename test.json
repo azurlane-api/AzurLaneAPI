@@ -1,0 +1,294 @@
+{
+    "data": {
+        "attributes": {
+            "full_name": "Kurozero",
+            "is_follower": false,
+            "last_charge_date": "2014-04-01T00:00:00.000+00:00",
+            "last_charge_status": "Paid",
+            "lifetime_support_cents": 12345,
+            "patron_status": "active_patron",
+            "pledge_amount_cents": 550,
+            "pledge_cap_amount_cents": null,
+            "pledge_relationship_start": "2014-03-14T00:00:00.000+00:00"
+        },
+        "id": null,
+        "relationships": {
+            "address": {
+                "data": null
+            },
+            "campaign": {
+                "data": {
+                    "id": "579419",
+                    "type": "campaign"
+                },
+                "links": {
+                    "related": "https://www.patreon.com/api/campaigns/579419"
+                }
+            },
+            "user": {
+                "data": {
+                    "id": "4256420",
+                    "type": "user"
+                },
+                "links": {
+                    "related": "https://www.patreon.com/api/user/4256420"
+                }
+            }
+        },
+        "type": "member"
+    },
+    "included": [
+        {
+            "attributes": {
+                "avatar_photo_url": "https://c10.patreonusercontent.com/3/eyJ3IjoyMDB9/patreon-media/p/campaign/579419/291fb78d3cc441e9bd04f5e51bc1fbff/1.png?token-time=2145916800&token-hash=eGIk7fAAVRNo7WEGIOZ6MxZPrqwJikAg6ub1Bojrxbw%3D",
+                "cover_photo_url": "https://c10.patreonusercontent.com/3/eyJ3IjoxOTIwfQ%3D%3D/patreon-media/p/campaign/579419/d7025431af914a42a4f7aa0aa3478f9d/3.png?token-time=1574380800&token-hash=TH68GqiDqD7rRZRM0NqpH8Uuk0rbfrRe8X4p5Zgwu5w%3D",
+                "created_at": "2016-10-24T00:10:53.000+00:00",
+                "creation_count": 0,
+                "creation_name": "Websites and Applications",
+                "discord_server_id": "240059867744698368",
+                "display_patron_goals": false,
+                "earnings_visibility": "public",
+                "image_small_url": "https://c10.patreonusercontent.com/3/eyJoIjo2NDAsInciOjY0MH0%3D/patreon-media/p/campaign/579419/d7025431af914a42a4f7aa0aa3478f9d/3.png?token-time=1574380800&token-hash=nZtRYQtA3rq0CfxSm15n-rbG8MTuL9nx16tSLynDHS0%3D",
+                "image_url": "https://c10.patreonusercontent.com/3/eyJ3IjoxOTIwfQ%3D%3D/patreon-media/p/campaign/579419/d7025431af914a42a4f7aa0aa3478f9d/3.png?token-time=1574380800&token-hash=TH68GqiDqD7rRZRM0NqpH8Uuk0rbfrRe8X4p5Zgwu5w%3D",
+                "is_charge_upfront": false,
+                "is_charged_immediately": false,
+                "is_monthly": true,
+                "is_nsfw": false,
+                "is_plural": false,
+                "main_video_embed": null,
+                "main_video_url": null,
+                "name": "Kurozero",
+                "one_liner": null,
+                "outstanding_payment_amount_cents": 0,
+                "patron_count": 0,
+                "pay_per_name": "month",
+                "pledge_sum": 0,
+                "pledge_url": "/join/Kurozero",
+                "published_at": "2018-07-06T12:39:03.000+00:00",
+                "summary": "<strong>Welcome to my patreon page, I see you're interested in what I'm creating.<br></strong>I do a lot of different things but currently I'm focused on discord bots, specifically Jeanne.<strong><br></strong>Look at my github to see all my projects: <a href=\"https://github.com/KurozeroPB\">github.com/KurozeroPB</a><br><strong><br>- Jeanne:<br></strong><div style=\"margin-left: 20px;\">- Jeanne is a general purpose Discord bot which has over a variety of commands.<br>- Website <a href=\"https://jeannebot.com\" target=\"_blank\">jeannebot.com</a><br>- GitHub: <a href=\"https://github.com/KurozeroPB/Jeanne\" target=\"_blank\">/KurozeroPB/Jeanne</a><a href=\"https://github.com/KurozeroPB/Yuzu\" target=\"_blank\"><br></a></div><strong></strong><span style=\"background-color: rgb(247, 150, 70);\"><span style=\"background-color: rgb(183, 221, 232);\"><span style=\"background-color: rgb(255, 255, 255);\"><strong>- Nekos:</strong><br></span></span></span><div style=\"margin-left: 20px;\"><span style=\"background-color: rgb(247, 150, 70);\"><span style=\"background-color: rgb(183, 221, 232);\"><span style=\"background-color: rgb(255, 255, 255);\">- Nekos is an android app that uses nekos.moe api<br>- GitHub: <a href=\"https://github.com/KurozeroPB/Nekos\">/KurozeroPB/Nekos</a></span></span></span><br><span style=\"background-color: rgb(247, 150, 70);\"><span style=\"background-color: rgb(183, 221, 232);\"><span style=\"background-color: rgb(255, 255, 255);\"></span></span></span></div><span style=\"background-color: rgb(247, 150, 70);\"><span style=\"background-color: rgb(183, 221, 232);\"><span style=\"background-color: rgb(255, 255, 255);\"><br>Any patreons are really appreciated and I can't thank you enough.<br>The money that I earn from patreon goes to the server cost the bots need to run on and to maintaining the websites.</span></span></span><strong><span style=\"background-color: rgb(247, 150, 70);\"><span style=\"background-color: rgb(183, 221, 232);\"></span></span></strong><br>\n\t<br>\n\tDiscord: \n\t<a href=\"https://discord.gg/p895czC\" target=\"_blank\">discord.gg/p895czC</a>",
+                "thanks_embed": "",
+                "thanks_msg": "",
+                "thanks_video_url": null,
+                "url": "https://www.patreon.com/Kurozero"
+            },
+            "id": "579419",
+            "relationships": {
+                "creator": {
+                    "data": {
+                        "id": "4256420",
+                        "type": "user"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/user/4256420"
+                    }
+                },
+                "goals": {
+                    "data": [
+                        {
+                            "id": "590298",
+                            "type": "goal"
+                        },
+                        {
+                            "id": "1104982",
+                            "type": "goal"
+                        },
+                        {
+                            "id": "1246724",
+                            "type": "goal"
+                        }
+                    ]
+                },
+                "rewards": {
+                    "data": [
+                        {
+                            "id": "-1",
+                            "type": "reward"
+                        },
+                        {
+                            "id": "0",
+                            "type": "reward"
+                        },
+                        {
+                            "id": "957325",
+                            "type": "reward"
+                        }
+                    ]
+                }
+            },
+            "type": "campaign"
+        },
+        {
+            "attributes": {
+                "about": "I'm a developer that likes to experiment with new languages although I mainly use JavaScript, Kotlin, C# and Python. I'm also currently learning Swift.<br>",
+                "can_see_nsfw": true,
+                "created": "2016-10-18T14:53:24.000+00:00",
+                "default_country_code": null,
+                "discord_id": "93973697643155456",
+                "email": "pepijn.vanden.broek@gmail.com",
+                "facebook": "",
+                "facebook_id": "622236874567973",
+                "first_name": "Kurozero",
+                "full_name": "Kurozero",
+                "gender": 0,
+                "google_id": "117965312092482422900",
+                "has_password": true,
+                "image_url": "https://c10.patreonusercontent.com/3/eyJ3IjoyMDB9/patreon-media/p/user/4256420/bf4e87410f424067838e1c840d4c411f/3.png?token-time=2145916800&token-hash=bG1aWC0mrRMM0vwT77YPCe-c_Axdz9P7F24XEb7AOsM%3D",
+                "is_deleted": false,
+                "is_email_verified": true,
+                "is_nuked": false,
+                "is_suspended": false,
+                "last_name": "",
+                "social_connections": {
+                    "deviantart": null,
+                    "discord": {
+                        "scopes": [
+                            "guilds",
+                            "guilds.join",
+                            "identify"
+                        ],
+                        "url": null,
+                        "user_id": "93973697643155456"
+                    },
+                    "facebook": null,
+                    "google": null,
+                    "instagram": null,
+                    "spotify": null,
+                    "twitch": null,
+                    "twitter": {
+                        "url": "https://twitter.com/pvdbroek98",
+                        "user_id": "1131209630510649344"
+                    },
+                    "youtube": null
+                },
+                "thumb_url": "https://c10.patreonusercontent.com/3/eyJ3IjoyMDB9/patreon-media/p/user/4256420/bf4e87410f424067838e1c840d4c411f/3.png?token-time=2145916800&token-hash=bG1aWC0mrRMM0vwT77YPCe-c_Axdz9P7F24XEb7AOsM%3D",
+                "twitch": null,
+                "twitter": "",
+                "url": "https://www.patreon.com/Kurozero",
+                "vanity": "Kurozero",
+                "youtube": ""
+            },
+            "id": "4256420",
+            "relationships": {
+                "campaign": {
+                    "data": {
+                        "id": "579419",
+                        "type": "campaign"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/campaigns/579419"
+                    }
+                }
+            },
+            "type": "user"
+        },
+        {
+            "attributes": {
+                "amount": 0,
+                "amount_cents": 0,
+                "created_at": null,
+                "description": "Everyone",
+                "remaining": 0,
+                "requires_shipping": false,
+                "url": null,
+                "user_limit": null
+            },
+            "id": "-1",
+            "type": "reward"
+        },
+        {
+            "attributes": {
+                "amount": 1,
+                "amount_cents": 1,
+                "created_at": null,
+                "description": "Patrons Only",
+                "remaining": 0,
+                "requires_shipping": false,
+                "url": null,
+                "user_limit": null
+            },
+            "id": "0",
+            "type": "reward"
+        },
+        {
+            "attributes": {
+                "amount": 500,
+                "amount_cents": 500,
+                "created_at": "2016-10-24T22:23:58.000+00:00",
+                "currency": "USD",
+                "description": "<p><strong>Patreon Supporter</strong></p>\n<p><br></p>\n<p>1. You will receive the patreon supporter discord role</p>\n<p>2. You will be listed as a supporter on Jeanne's website</p>\n<p>3. You will get access to supporter only features<strong><br>\n</strong></p>",
+                "discord_role_ids": null,
+                "edited_at": "2019-10-29T12:48:35.469+00:00",
+                "image_url": "https://c10.patreonusercontent.com/3/eyJ3Ijo0MDB9/patreon-media/p/reward/957325/9a63ff6190ce49a283e87f2de28bd568/2.jpe?token-time=2145916800&token-hash=6jT9-Daf1UlAwaTyqg3JQD_J-7YabPc0CWphI0YCuh4%3D",
+                "patron_count": 0,
+                "post_count": 0,
+                "published": true,
+                "published_at": "2019-10-29T12:48:35.458+00:00",
+                "remaining": null,
+                "requires_shipping": false,
+                "title": "Supporter",
+                "unpublished_at": null,
+                "url": "/join/Kurozero/checkout?rid=957325",
+                "user_limit": null,
+                "welcome_message": null,
+                "welcome_message_unsafe": null,
+                "welcome_video_embed": null,
+                "welcome_video_url": null
+            },
+            "id": "957325",
+            "relationships": {
+                "campaign": {
+                    "data": {
+                        "id": "579419",
+                        "type": "campaign"
+                    },
+                    "links": {
+                        "related": "https://www.patreon.com/api/campaigns/579419"
+                    }
+                }
+            },
+            "type": "reward"
+        },
+        {
+            "attributes": {
+                "amount_cents": 3000,
+                "completed_percentage": 0,
+                "created_at": "2016-10-24T00:24:50.000+00:00",
+                "currency": "USD",
+                "description": "Not having to worry about if I can pay for this months server costs<br>",
+                "reached_at": null,
+                "title": ""
+            },
+            "id": "590298",
+            "type": "goal"
+        },
+        {
+            "attributes": {
+                "amount_cents": 2000,
+                "completed_percentage": 0,
+                "created_at": "2018-02-07T22:24:16.000+00:00",
+                "currency": "USD",
+                "description": "The server cost for the bots<br>",
+                "reached_at": null,
+                "title": ""
+            },
+            "id": "1104982",
+            "type": "goal"
+        },
+        {
+            "attributes": {
+                "amount_cents": 5000,
+                "completed_percentage": 0,
+                "created_at": "2018-07-06T19:45:24.000+00:00",
+                "currency": "USD",
+                "description": "Expand to a bigger and better server",
+                "reached_at": null,
+                "title": ""
+            },
+            "id": "1246724",
+            "type": "goal"
+        }
+    ],
+    "links": {
+        "self": "https://www.patreon.com/api/members/None"
+    }
+}

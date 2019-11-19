@@ -29,13 +29,13 @@ object PatreonController {
         val keySpec = SecretKeySpec(key.toByteArray(), algorithm)
         val mac = Mac.getInstance(algorithm)
         mac.init(keySpec)
-        // val sign = mac.doFinal(text).joinToString("") { String.format("%02x", it and 255.toByte()) }
-        val digest = MessageDigest.getInstance("hex").digest(mac.doFinal(text)).joinToString("")
+        val sign = mac.doFinal(text).joinToString("") { String.format("%02x", it and 255.toByte()) }
+        // val digest = MessageDigest.getInstance("hex").digest(mac.doFinal(text)).joinToString("")
 
         println("signature: $signature")
-        println("digest: $digest")
+        println("digest: $sign")
 
-        if (signature != digest) {
+        if (signature != sign) {
             ctx.status(403).json(ErrorResponse(
                 statusCode = 403,
                 statusMessage = "Forbidden",

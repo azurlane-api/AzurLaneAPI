@@ -3,6 +3,7 @@ package info.kurozeropb.azurlane.structures
 data class Patron(
     val id: String,
     val token: String,
+    val enabled: Boolean,
     val amount: Int
 )
 

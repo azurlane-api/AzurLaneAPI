@@ -13,6 +13,10 @@ object PatreonController {
 
     }
 
+    private fun disableToken() {
+
+    }
+
     private fun deleteToken() {
 
     }
@@ -25,12 +29,11 @@ object PatreonController {
 
         val algorithm = "HmacMD5"
         val key = dotenv["patreon"] ?: ""
-        val text = body.toByteArray()
 
         val keySpec = SecretKeySpec(key.toByteArray(), algorithm)
         val mac = Mac.getInstance(algorithm)
         mac.init(keySpec)
-        val sign = mac.doFinal(text).joinToString("") { String.format("%02x", it and 255.toByte()) }
+        val sign = mac.doFinal(body.toByteArray()).joinToString("") { String.format("%02x", it and 255.toByte()) }
 
         println("signature: $signature")
         println("digest: $sign")
@@ -50,12 +53,20 @@ object PatreonController {
          */
 
         when (trigger) {
-            "members:pledge:create" -> createToken()
-            "members:pledge:delete" -> deleteToken()
+            "members:pledge:create" -> {
+                createToken()
+            }
+            "members:pledge:update" -> {
+                disableToken()
+            }
+            "members:pledge:delete" -> {
+                deleteToken()
+            }
         }
 
         println(trigger)
         println(body)
+
         ctx.status(200).json(ErrorResponse(
             statusCode = 200,
             statusMessage = "OK",

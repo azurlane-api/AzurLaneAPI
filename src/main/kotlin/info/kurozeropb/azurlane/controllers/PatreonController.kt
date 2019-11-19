@@ -3,7 +3,6 @@ package info.kurozeropb.azurlane.controllers
 import info.kurozeropb.azurlane.dotenv
 import info.kurozeropb.azurlane.structures.ErrorResponse
 import io.javalin.http.Context
-import java.security.MessageDigest
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import kotlin.experimental.and
@@ -22,15 +21,16 @@ object PatreonController {
         val trigger = ctx.header("X-Patreon-Event")
         val signature = ctx.header("X-Patreon-Signature")
 
+        val body = ctx.body()
+
         val algorithm = "HmacMD5"
         val key = dotenv["patreon"] ?: ""
-        val text = ctx.bodyAsBytes()
+        val text = body.toByteArray()
 
         val keySpec = SecretKeySpec(key.toByteArray(), algorithm)
         val mac = Mac.getInstance(algorithm)
         mac.init(keySpec)
         val sign = mac.doFinal(text).joinToString("") { String.format("%02x", it and 255.toByte()) }
-        // val digest = MessageDigest.getInstance("hex").digest(mac.doFinal(text)).joinToString("")
 
         println("signature: $signature")
         println("digest: $sign")
@@ -45,7 +45,7 @@ object PatreonController {
         }
 
         println(trigger)
-        println(ctx.body())
+        println(body)
         ctx.status(200).json(ErrorResponse(
             statusCode = 200,
             statusMessage = "OK",

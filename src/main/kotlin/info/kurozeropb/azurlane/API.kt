@@ -43,7 +43,7 @@ object API {
                 })
             }
 
-            get("/patreon", PatreonController::handleRequest)
+            post("/patreon", PatreonController::handleRequest)
 
             path("v1") {
                 get { ctx ->

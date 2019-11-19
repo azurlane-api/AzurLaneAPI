@@ -19,41 +19,42 @@ data class Attributes(
     val pledge_relationship_start: String? = null
 )
 
-data class Data(
-    val id: String,
-    val type: String
-)
+//data class Data(
+//    val id: String,
+//    val type: String
+//)
 
-data class Address(
-    val data: Data? = null
-)
+//data class Address(
+//    val data: Data? = null
+//)
 
-data class Campaign(
-    val data: Data? = null
-)
+//data class Campaign(
+//    val data: Data? = null
+//)
 
-data class CurrentlyEntitledTiers(
-    val data: List<Any>
-)
+//data class CurrentlyEntitledTiers(
+//    val data: List<Any>
+//)
 
-data class User(
-    val data: Data? = null
-)
+//data class User(
+//    val data: Data? = null
+//)
 
-data class Relationships(
-    val address: Address,
-    val campaign: Campaign,
-    val currently_entitled_tiers: CurrentlyEntitledTiers,
-    val user: User
-)
+//data class Relationships(
+//    val address: Address,
+//    val campaign: Campaign,
+//    val currently_entitled_tiers: CurrentlyEntitledTiers,
+//    val user: User
+//)
 
 data class PatreonData(
-    val attributes: Attributes,
-    val id: String,
-    val relationships: Relationships,
-    val type: String
+    val attributes: Attributes//,
+//    val id: String,
+//    val relationships: Relationships,
+//    val type: String
 )
 
 data class PatreonBody(
-    val data: PatreonData
+    val data: PatreonData,
+    val included: List<Any>
 )

@@ -1,7 +1,9 @@
 package info.kurozeropb.azurlane.controllers
 
+import com.google.gson.Gson
 import info.kurozeropb.azurlane.dotenv
 import info.kurozeropb.azurlane.structures.ErrorResponse
+import info.kurozeropb.azurlane.structures.PatreonBody
 import io.javalin.http.Context
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
@@ -10,10 +12,6 @@ import kotlin.experimental.and
 object PatreonController {
 
     private fun createToken() {
-
-    }
-
-    private fun disableToken() {
 
     }
 
@@ -53,19 +51,30 @@ object PatreonController {
          */
 
         when (trigger) {
+            "members:create" -> {
+                // Add member to database
+            }
+            "members:update" -> {
+                // Check if data changed
+            }
+            "members:delete" -> {
+                // Disable/Delete member (not sure yet)
+            }
             "members:pledge:create" -> {
+                // Create token for member
                 createToken()
             }
             "members:pledge:update" -> {
-                disableToken()
+                // Not sure yet
             }
             "members:pledge:delete" -> {
+                // Delete token
                 deleteToken()
             }
         }
 
         println(trigger)
-        println(body)
+        println(Gson().fromJson(body, PatreonBody::class.java))
 
         ctx.status(200).json(ErrorResponse(
             statusCode = 200,

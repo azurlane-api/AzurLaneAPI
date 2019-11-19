@@ -27,7 +27,7 @@ object PatreonController {
 
     private fun createToken(): String {
         return (1..tokenLength)
-            .map { _ -> Random.nextInt(0, charPool.size) }
+            .map { Random.nextInt(0, charPool.size) }
             .map(charPool::get)
             .joinToString("")
     }
@@ -36,11 +36,11 @@ object PatreonController {
         val prop = Properties()
         prop["mail.smtp.auth"] = true
         prop["mail.transport.protocol"] = "smtp"
-        prop["mail.host"] = "mail.kurozeropb.info"
+        prop["mail.host"] = dotenv["mail_host"]
         prop["mail.smtp.starttls.enable"] = "true"
-        prop["mail.smtp.host"] = "mail.kurozeropb.info"
+        prop["mail.smtp.host"] = dotenv["mail_host"]
         prop["mail.smtp.port"] = "587"
-        prop["mail.smtp.ssl.trust"] = "mail.kurozeropb.info"
+        prop["mail.smtp.ssl.trust"] = dotenv["mail_host"]
 
         val session = Session.getInstance(prop, object : Authenticator() {
             override fun getPasswordAuthentication(): PasswordAuthentication? {
@@ -53,7 +53,6 @@ object PatreonController {
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email))
         message.subject = "Azur Lane API authentication token"
 
-//        val msg = "Thank you for donating, here is your api token: $token"
         val msg = """
             <html>
                 <head>
@@ -109,7 +108,7 @@ object PatreonController {
             return
         }
 
-        val response = Gson().fromJson(body, Patreon::class.java);
+        val response = Gson().fromJson(body, Patreon::class.java)
         val user = if (response.included.count() >= 2) Gson().fromJson(Gson().toJson(response.included[1]), User::class.java) else null
 
         if (user == null) {
@@ -134,16 +133,9 @@ object PatreonController {
                     ))
                 }
             }
-            "members:update" -> {
-                // Check if data changed
-                DatabaseManager.users.findOneAndUpdate(Patron::id eq user.id, setValue(Patron::email, user.attributes.email))
-            }
-            "members:delete" -> {
-                // Disable/Delete member (not sure yet)
-                DatabaseManager.users.findOneAndDelete(Patron::id eq user.id)
-            }
+            "members:update" -> DatabaseManager.users.findOneAndUpdate(Patron::id eq user.id, setValue(Patron::email, user.attributes.email))
+            "members:delete" ->  DatabaseManager.users.findOneAndDelete(Patron::id eq user.id)
             "members:pledge:create" -> {
-                // Create token for member
                 val patron = DatabaseManager.users.findOne(Patron::id eq user.id)
                 val token = createToken()
                 if (patron != null) {
@@ -176,13 +168,7 @@ object PatreonController {
             "members:pledge:update" -> {
                 // Not sure yet
             }
-            "members:pledge:delete" -> {
-                // Delete token
-                DatabaseManager.users.findOneAndUpdate(Patron::id eq user.id, set(
-                    SetTo(Patron::token, ""),
-                    SetTo(Patron::enabled, false)
-                ))
-            }
+            "members:pledge:delete" -> DatabaseManager.users.findOneAndUpdate(Patron::id eq user.id, set(SetTo(Patron::token, ""), SetTo(Patron::enabled, false)))
         }
 
         ctx.status(200).json(ErrorResponse(

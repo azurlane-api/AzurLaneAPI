@@ -53,30 +53,30 @@ object PatreonController {
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email))
         message.subject = "Azur Lane API authentication token"
 
-        val msg = "Thanks you for donating, here is your api token: $token"
-//        val msg = """
-//            <html>
-//                <head>
-//                    <title>Azur Lane API authentication token</title>
-//                </head>
-//                <body>
-//                    <p>
-//                        Thank you for donating, here is your api token to use for <a target="_blank" href="https://azurlane-api.herokuapp.com/v2">https://azurlane-api.herokuapp.com/v2</a>
-//                    </p>
-//                    <table style="border-collapse: collapse; border: 1px solid grey;">
-//                        <tr>
-//                            <th style="border: 1px solid grey; padding: 15px; text-align: left;">Token</th>
-//                        </tr>
-//                        <tr>
-//                            <td style="border: 1px solid grey; padding: 15px; text-align: left;">${token}</td>
-//                        </tr>
-//                    </table>
-//                </body>
-//            </html>
-//        """.trimIndent()
+//        val msg = "Thank you for donating, here is your api token: $token"
+        val msg = """
+            <html>
+                <head>
+                    <title>Azur Lane API authentication token</title>
+                </head>
+                <body>
+                    <p>
+                        <b>Thank you for donating, here is your api token</b>
+                    </p>
+                    <table style="border-collapse: collapse; border: 1px solid grey;">
+                        <tr>
+                            <th style="border: 1px solid grey; padding: 15px; text-align: left;">Token</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid grey; padding: 15px; text-align: left;">${token}</td>
+                        </tr>
+                    </table>
+                </body>
+            </html>
+        """.trimIndent()
 
         val mimeBodyPart = MimeBodyPart()
-        mimeBodyPart.setContent(msg, "text/plain")
+        mimeBodyPart.setContent(msg, "text/html")
 
         val multipart: Multipart = MimeMultipart()
         multipart.addBodyPart(mimeBodyPart)

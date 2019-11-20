@@ -309,6 +309,20 @@ object ShipController {
                         }
                     }
 
+                    val element = getElementsContainingOwnText("Equipment")
+                    val children = element.first().parent().parent().children()
+                    val equipments = mutableListOf<Equipment>()
+                    children.forEach { el ->
+                        if (el.child(0).text() == "Slot" || el.child(0).text() == "Equipment") return@forEach
+                        equipments.add(Equipment(
+                            efficiency = el.child(1).text(),
+                            equippable = Equippable(
+                                value = el.child(2).text(),
+                                link = "${Config.baseUrl}${el.child(2).child(0).attr("href")}"
+                            )
+                        ))
+                    }
+
                     Ship(
                         wikiUrl = "${Config.baseUrl}/${ship}",
                         id = shipId,
@@ -331,7 +345,8 @@ object ShipController {
                         nationalityShort = short,
                         hullType = getElementsContainingOwnText("Classification").first()?.nextElementSibling()?.text(),
                         stats = Stats(_100, _120, baseStats, if (_100Retrofit.isEmpty()) null else _100Retrofit, if (_120Retrofit.isEmpty()) null else _120Retrofit),
-                        miscellaneous = miscellaneous
+                        miscellaneous = miscellaneous,
+                        equipments = equipments
                     )
                 }
             }

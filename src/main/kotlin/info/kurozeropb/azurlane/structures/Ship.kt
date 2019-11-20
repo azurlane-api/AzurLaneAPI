@@ -45,6 +45,16 @@ data class Miscellaneous(
     var voiceActress: MiscellaneousData? = null
 )
 
+data class Equippable(
+    var value: String,
+    var link: String
+)
+
+data class Equipment(
+    var efficiency: String? = null,
+    var equippable: Equippable? = null
+)
+
 data class Ship(
     val wikiUrl: String,
     val id: String? = null,
@@ -58,8 +68,9 @@ data class Ship(
     val nationality: String? = null,
     val nationalityShort: String? = null,
     val hullType: String? = null,
-    val stats: Stats? = null, // Change back to not null
-    val miscellaneous: Miscellaneous? = null // Change back to not null
+    val stats: Stats,
+    val miscellaneous: Miscellaneous,
+    val equipments: List<Equipment>
 )
 
 data class ShipResponse(

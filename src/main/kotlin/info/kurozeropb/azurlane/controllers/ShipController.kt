@@ -172,7 +172,7 @@ object ShipController {
                         val child = element.children().find { c -> c.className().contains("adaptiveratioimg") }
                         if (child != null) {
                             var skinChibi: String? = null
-                            var chibi = if (chibis.isNullOrEmpty()) null else chibis[index].attr("src").split("/")
+                            var chibi = if (chibis.isNullOrEmpty() || chibis.count() <= index) null else chibis[index].attr("src").split("/")
                             if (chibi.isNullOrEmpty().not()) {
                                 chibi = chibi!!.dropLast(1)
                                 skinChibi = Config.baseUrl + chibi.joinToString("/").replace("/thumb", "")

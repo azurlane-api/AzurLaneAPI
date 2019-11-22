@@ -77,7 +77,7 @@ object NamesController {
                         ships.add(it.child(0).attr("title"))
                     }
 
-                    ships
+                    ships.distinct()
                 }
             }
         }

@@ -1,9 +1,6 @@
 package info.kurozeropb.azurlane
 
-import info.kurozeropb.azurlane.controllers.ConstructionController
-import info.kurozeropb.azurlane.controllers.PatreonController
-import info.kurozeropb.azurlane.controllers.ShipController
-import info.kurozeropb.azurlane.controllers.ShipsController
+import info.kurozeropb.azurlane.controllers.*
 import info.kurozeropb.azurlane.managers.DatabaseManager
 import info.kurozeropb.azurlane.structures.Patron
 import io.github.cdimascio.dotenv.Dotenv
@@ -83,7 +80,8 @@ object API {
                         val routes = listOf(
                             "/ship",
                             "/ships",
-                            "/build"
+                            "/build",
+                            "/names"
                         )
                     })
                 }
@@ -93,6 +91,8 @@ object API {
                 get("/build", ConstructionController::getBuildInfo)
 
                 get("/ships", ShipsController::getShips)
+
+                get("/names", NamesController::getNames)
             }
         }
     }

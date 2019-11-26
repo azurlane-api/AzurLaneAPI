@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 group = "info.kurozeropb.azurlane"
-version = "2.0.0"
+version = "2.1.0"
 
 plugins {
     eclipse

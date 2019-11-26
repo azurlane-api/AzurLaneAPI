@@ -2,7 +2,6 @@ package info.kurozeropb.azurlane.controllers
 
 import info.kurozeropb.azurlane.API
 import info.kurozeropb.azurlane.Config
-import info.kurozeropb.azurlane.structures.Construction
 import info.kurozeropb.azurlane.structures.ErrorResponse
 import io.javalin.http.Context
 import it.skrape.core.Method
@@ -13,16 +12,26 @@ import it.skrape.selects.html5.div
 import it.skrape.selects.htmlDocument
 import it.skrape.skrape
 
-data class NamesResponse(
+typealias Ships = List<AllShip>
+
+data class AllShip(
+    val name: String?,
+    val id: String?,
+    val type: String?,
+    val nationality: String?,
+    val rarity: String?
+)
+
+data class AllShipsResponse(
     val statusCode: Int,
     val statusMessage: String,
     val message: String,
-    val ships: List<String>
+    val ships: Ships
 )
 
-object NamesController {
+object AllShipsController {
 
-    fun getNames(ctx: Context) {
+    fun getAllShips(ctx: Context) {
         val authorized = API.authorize(ctx)
         if (!authorized) {
             ctx.status(401).json(ErrorResponse(
@@ -48,7 +57,7 @@ object NamesController {
             return
         }
 
-        ctx.status(200).json(NamesResponse(
+        ctx.status(200).json(AllShipsResponse(
             statusCode = 200,
             statusMessage = "OK",
             message = "The request was successful",
@@ -58,7 +67,7 @@ object NamesController {
 
     private fun scrapeNames() =
         skrape {
-            url = "${Config.baseUrl}/Building"
+            url = "${Config.baseUrl}/List_of_Ships_by_Image"
             mode = Mode.DOM
             method = Method.GET
             followRedirects = true
@@ -66,18 +75,33 @@ object NamesController {
 
             extract {
                 htmlDocument {
+                    val ships = mutableListOf<AllShip>()
 
-                    val ships = mutableListOf<String>()
-                    val items = div {
-                        withClass = "azlicon-img"
-                        findAll {  this }
+                    val divs = div {
+                        withClass = "shipyardicon"
+                        findAll {
+                            this
+                        }
                     }
 
-                    items.forEach {
-                        ships.add(it.child(0).attr("title"))
+                    divs.forEach {
+                        if (it.children().size == 4) {
+                            val id = try { it.child(0).child(1).text() } catch (e: Exception) { null }
+                            val numeric = id?.matches("-?\\d+(\\.\\d+)?".toRegex()) ?: false
+                            if (numeric && id?.length == 4) {
+                                // Retrofit ship
+                                return@forEach
+                            } else {
+                                val type = try { it.child(0).child(0).child(0).attr("title") } catch (e: Exception) { null }
+                                val nationality = try { it.child(2).child(0).child(0).attr("title") } catch (e: Exception) { null }
+                                val rarity = try { it.child(2).child(1).child(0).attr("title").replace("Category:", "").replace("ships", "").trim() } catch (e: Exception) { null }
+                                val name = try { it.child(3).child(0).text() } catch (e: Exception) { null }
+                                ships.add(AllShip(name, id, type, nationality, rarity))
+                            }
+                        }
                     }
 
-                    ships.distinct()
+                    ships
                 }
             }
         }

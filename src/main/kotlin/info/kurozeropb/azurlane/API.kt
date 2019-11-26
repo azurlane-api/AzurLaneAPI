@@ -92,7 +92,7 @@ object API {
 
                 get("/ships", ShipsController::getShips)
 
-                get("/names", NamesController::getNames)
+                get("/ships/all", AllShipsController::getAllShips)
             }
         }
     }

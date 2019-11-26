@@ -3,6 +3,7 @@ package info.kurozeropb.azurlane.controllers
 import info.kurozeropb.azurlane.API
 import info.kurozeropb.azurlane.Config
 import info.kurozeropb.azurlane.structures.*
+import info.kurozeropb.azurlane.utils.capitalizeName
 import io.javalin.http.Context
 import it.skrape.core.Method
 import it.skrape.core.Mode
@@ -55,14 +56,19 @@ object ShipController {
         name = name.toLowerCase()
             .replace(Regex(" ", setOf(RegexOption.IGNORE_CASE)), "_")
             .split("_")
-            .map { if (Config.skipCapitalization.contains(it)) it else it.capitalize() }
+            .map { if (Config.skipCapitalization.contains(it)) it else it.capitalizeName() }
             .joinToString("_") { if (Config.capitalizeAll.contains(it)) it.toUpperCase() else it }
 
         if (name.startsWith("Jeanne")) {
             name = "Jeanne d'Arc"
         }
 
+        if (name.toLowerCase() == "l'opiniâtre") {
+            name = "L'Opiniâtre"
+        }
+
         val isValid = try {
+            println(name)
             validateShip(name.split("_").joinToString(" "))
         } catch(e: Exception) {
             e.printStackTrace()

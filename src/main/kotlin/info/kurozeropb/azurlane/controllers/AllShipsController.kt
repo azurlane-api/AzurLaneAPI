@@ -17,6 +17,7 @@ typealias Ships = List<AllShip>
 data class AllShip(
     val name: String?,
     val id: String?,
+    val avatar: String?,
     val type: String?,
     val nationality: String?,
     val rarity: String?
@@ -93,10 +94,11 @@ object AllShipsController {
                                 return@forEach
                             } else {
                                 val type = try { it.child(0).child(0).child(0).attr("title") } catch (e: Exception) { null }
+                                val avatar = try { Config.baseUrl + it.child(1).child(0).child(0).attr("src") } catch (e: Exception) { null }
                                 val nationality = try { it.child(2).child(0).child(0).attr("title") } catch (e: Exception) { null }
                                 val rarity = try { it.child(2).child(1).child(0).attr("title").replace("Category:", "").replace("ships", "").trim() } catch (e: Exception) { null }
                                 val name = try { it.child(3).child(0).text() } catch (e: Exception) { null }
-                                ships.add(AllShip(name, id, type, nationality, rarity))
+                                ships.add(AllShip(name, id, avatar, type, nationality, rarity))
                             }
                         }
                     }

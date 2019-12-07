@@ -1,6 +1,7 @@
 package info.kurozeropb.azurlane
 
 import info.kurozeropb.azurlane.controllers.*
+import info.kurozeropb.azurlane.controllers.NationsController
 import info.kurozeropb.azurlane.managers.DatabaseManager
 import info.kurozeropb.azurlane.structures.Patron
 import io.github.cdimascio.dotenv.Dotenv
@@ -93,6 +94,8 @@ object API {
                 get("/ships", ShipsController::getShips)
 
                 get("/ships/all", AllShipsController::getAllShips)
+
+                get("/nations", NationsController::getNations)
             }
         }
     }

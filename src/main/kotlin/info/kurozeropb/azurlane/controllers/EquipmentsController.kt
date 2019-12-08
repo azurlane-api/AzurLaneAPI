@@ -9,6 +9,7 @@ import it.skrape.core.Mode
 import it.skrape.extract
 import it.skrape.selects.htmlDocument
 import it.skrape.skrape
+import org.jsoup.select.Elements
 
 val rarities = mapOf(
     "" to "Normal",
@@ -68,7 +69,7 @@ object EquipmentsController {
         val equipment = equipments.find { it.name == type }
         val data = if (equipment != null) {
             if (equipment.url != null) {
-                scrapeEquipments(equipment.url)
+                scrapeEquipments(equipment.name ?: "", equipment.url)
             } else {
                 ctx.status(400).json(ErrorResponse(
                     statusCode = 400,
@@ -119,7 +120,7 @@ object EquipmentsController {
         ))
     }
 
-    private fun scrapeEquipments(equipmentsUrl: String) =
+    private fun scrapeEquipments(name: String, equipmentsUrl: String) =
         skrape {
             url = equipmentsUrl
             mode = Mode.DOM
@@ -130,24 +131,53 @@ object EquipmentsController {
             extract {
                 htmlDocument {
                     val equipments = mutableListOf<Equipment>()
-                    val title = getElementsContainingOwnText("Equipment")[0]
-                    val body = title.parent().parent().children()
-                    body.forEach {
-                        if (it.child(0).text() == "Equipment" || it.child(0).text() == "L") {
-                            return@forEach
-                        }
 
-                        val name = try { it.child(0).child(0).text() } catch (e: Exception) { null }
-                        var iconList = try { it.child(1).child(0).child(0).child(0).child(0).child(0).attr("src").split("/") } catch (e: Exception) { null }
-                        val icon = if (iconList != null) {
-                            iconList = iconList.subList(0, iconList.size - 1)
-                            "${Config.baseUrl}${iconList.joinToString("/").replace("/thumb", "")}"
-                        } else {
-                            null
+                    val stupid = listOf(
+                        "Auxiliary Equipment",
+                        "Anti-Submarine Equipment"
+                    )
+
+                    val tabber = getElementsByAttributeValueStarting("id", "tabber-")[0]
+                    if (stupid.contains(name)) {
+                        var body = tabber.child(1).child(1).child(1).children()
+                        body = Elements(body.subList(1, body.size))
+                        body.forEach {
+                            val eqName = try { it.child(0).child(0).text() } catch (e: Exception) { null }
+                            var iconList = try { it.child(1).child(0).child(0).attr("src").split("/") } catch (e: Exception) { null }
+                            val icon = if (iconList != null) {
+                                iconList = iconList.subList(0, iconList.size - 1)
+                                "${Config.baseUrl}${iconList.joinToString("/").replace("/thumb", "")}"
+                            } else {
+                                null
+                            }
+
+                            val rarity = when (it.child(2).text().trim().count { star -> star == '★' }) {
+                                1, 2 -> "Normal"
+                                3 -> "Rare"
+                                4 -> "Epic"
+                                5 -> "Super Rare"
+                                6 -> "Ultra Rare"
+                                else -> null
+                            }
+
+                            equipments.add(Equipment(eqName, icon, rarity))
                         }
-                        val rarityclass = try { it.child(1).child(0).child(0).classNames().last() } catch (e: Exception) { null }
-                        val rarity = if (rarityclass != null) rarities[rarityclass] else null
-                        equipments.add(Equipment(name, icon, rarity))
+                    } else {
+                        var body = tabber.child(0).child(1).child(0).children()
+                        body = Elements(body.subList(2, body.size))
+                        body.forEach {
+                            val eqName = try { it.child(0).child(0).text() } catch (e: Exception) { null }
+                            var iconList2 = try { it.child(1).child(0).child(0).child(0).child(0).child(0).attr("src").split("/") } catch (e: Exception) { null }
+                            val icon = if (iconList2 != null) {
+                                iconList2 = iconList2.subList(0, iconList2.size - 1)
+                                "${Config.baseUrl}${iconList2.joinToString("/").replace("/thumb", "")}"
+                            } else {
+                                null
+                            }
+                            val rarityclass = try { it.child(1).child(0).child(0).classNames().last() } catch (e: Exception) { null }
+                            val rarity = if (rarityclass != null) rarities[rarityclass] else null
+                            equipments.add(Equipment(eqName, icon, rarity))
+                        }
                     }
 
                     equipments

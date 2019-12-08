@@ -96,6 +96,12 @@ object API {
                 get("/ships/all", AllShipsController::getAllShips)
 
                 get("/nations", NationsController::getNations)
+
+                get("/equipment") {}
+
+                get("/equipment/all", EquipmentsController::getEquipments)
+
+                get("/equipment/types", EquipmentsController::getEquipmentTypes)
             }
         }
     }

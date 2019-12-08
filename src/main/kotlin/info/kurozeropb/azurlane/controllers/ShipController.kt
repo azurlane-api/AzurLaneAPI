@@ -317,10 +317,10 @@ object ShipController {
 
                     val element = getElementsContainingOwnText("Equipment")
                     val children = element.first().parent().parent().children()
-                    val equipments = mutableListOf<Equipment>()
+                    val equipments = mutableListOf<ShipEquipment>()
                     children.forEach { el ->
                         if (el.child(0).text() == "Slot" || el.child(0).text() == "Equipment") return@forEach
-                        equipments.add(Equipment(
+                        equipments.add(ShipEquipment(
                             efficiency = el.child(1).text(),
                             equippable = Equippable(
                                 value = el.child(2).text(),

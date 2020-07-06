@@ -10,4 +10,4 @@ data class ShipsResponse(
     override val statusMessage: String,
     override val message: String,
     val ships: List<SmallShip>
-) : BaseResponse
+) : IBaseResponse

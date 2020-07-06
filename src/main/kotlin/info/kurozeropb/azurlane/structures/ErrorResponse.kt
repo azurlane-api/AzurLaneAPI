@@ -5,4 +5,4 @@ data class ErrorResponse(
     override val statusMessage: String,
     override val message: String,
     val error: String? = null
-) : BaseResponse
+) : IBaseResponse

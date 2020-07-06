@@ -78,4 +78,4 @@ data class ShipResponse(
     override val statusMessage: String,
     override val message: String,
     val ship: Ship
-) : BaseResponse
+) : IBaseResponse

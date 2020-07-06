@@ -11,4 +11,4 @@ data class ConstructionResponse(
     override val statusMessage: String,
     override val message: String,
     val construction: Construction
-) : BaseResponse
+) : IBaseResponse

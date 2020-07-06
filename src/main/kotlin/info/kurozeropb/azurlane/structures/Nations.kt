@@ -13,4 +13,4 @@ data class NationsResponse(
     override val statusMessage: String,
     override val message: String,
     val nations: Nations
-) : BaseResponse
+) : IBaseResponse

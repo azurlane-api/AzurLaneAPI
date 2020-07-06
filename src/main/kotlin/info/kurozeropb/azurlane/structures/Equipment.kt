@@ -13,7 +13,7 @@ data class EquipmentResponse(
     override val statusMessage: String,
     override val message: String,
     val equipments: Equipments
-) : BaseResponse
+) : IBaseResponse
 
 data class SmallEquipment(
     val name: String? = null,
@@ -27,4 +27,4 @@ data class EquipmentsResponse(
     override val statusMessage: String,
     override val message: String,
     val equipments: SmallEquipments
-) : BaseResponse
+) : IBaseResponse

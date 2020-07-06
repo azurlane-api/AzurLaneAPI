@@ -1,1 +1,0 @@
-web: java -jar build/libs/azurlane-api-2.1.0.jar

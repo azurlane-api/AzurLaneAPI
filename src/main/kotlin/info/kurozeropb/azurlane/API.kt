@@ -3,7 +3,9 @@ package info.kurozeropb.azurlane
 import info.kurozeropb.azurlane.controllers.*
 import info.kurozeropb.azurlane.controllers.NationsController
 import info.kurozeropb.azurlane.managers.DatabaseManager
+import info.kurozeropb.azurlane.structures.BaseResponse
 import info.kurozeropb.azurlane.structures.Patron
+import info.kurozeropb.azurlane.structures.IndexResponse
 import io.github.cdimascio.dotenv.Dotenv
 import io.github.cdimascio.dotenv.dotenv
 import io.javalin.apibuilder.ApiBuilder.*
@@ -26,82 +28,73 @@ object API {
         val app = Javalin.create().apply {
             exception(Exception::class.java) { e, _ -> e.printStackTrace() }
             error(404) { ctx -> ctx.json("not found") }
-        }.start(dotenv["PORT"]?.toInt() ?: 8080)
+        }.start(dotenv["PORT"]?.toInt() ?: 8081)
 
         DatabaseManager.initialize()
 
         app.routes {
 
-            get("/") { ctx ->
-                ctx.status(200).json(object {
-                    val statusCode = 200
-                    val statusMessage = "OK"
-                    val message = "Request was successful"
-                    val routes = listOf(
-                        "/v1/ship [deprecated]",
-                        "/v1/ships [deprecated]",
-                        "/v1/build [deprecated]",
-                        "/v2/ship",
-                        "/v2/ships",
-                        "/v2/build"
-                    )
-                })
-            }
+            path("/azurlane") {
 
-            post("/patreon", PatreonController::handleRequest)
-
-            path("/v1") {
-                get { ctx ->
-                    ctx.status(200).json(object {
-                        val statusCode = 200
-                        val statusMessage = "OK"
-                        val message = "Request was successful"
-                        val routes = listOf(
-                            "/ship [deprecated]",
-                            "/ships [deprecated]",
-                            "/build [deprecated]"
+                get("/") { ctx ->
+                    ctx.status(200).json(IndexResponse(
+                        statusCode = 200,
+                        statusMessage = "OK",
+                        message = "Request was successful",
+                        routes = listOf(
+                            "/v2/ship",
+                            "/v2/ships",
+                            "/v2/build",
+                            "/v2/names"
                         )
-                    })
+                    ))
                 }
 
-                get("/ship", ShipController::getShip)
+                post("/patreon", PatreonController::handleRequest)
 
-                get("/build", ConstructionController::getBuildInfo)
-
-                get("/ships", ShipsController::getShips)
-            }
-
-            path("/v2") {
-
-                get { ctx ->
-                    ctx.status(200).json(object {
-                        val statusCode = 200
-                        val statusMessage = "OK"
-                        val message = "Request was successful"
-                        val routes = listOf(
-                            "/ship",
-                            "/ships",
-                            "/build",
-                            "/names"
-                        )
-                    })
+                path("/v1") {
+                    get { ctx ->
+                        ctx.status(200).json(BaseResponse(
+                            statusCode = 410,
+                            statusMessage = "Gone",
+                            message = "v1 is no longer available and has been permanently deleted, please switch all api requests to /v2"
+                        ))
+                    }
                 }
 
-                get("/ship", ShipController::getShip)
+                path("/v2") {
 
-                get("/build", ConstructionController::getBuildInfo)
+                    get { ctx ->
+                        ctx.status(200).json(IndexResponse(
+                            statusCode = 200,
+                            statusMessage = "OK",
+                            message = "Request was successful",
+                            routes = listOf(
+                                "/ship",
+                                "/ships",
+                                "/build",
+                                "/names"
+                            )
+                        ))
+                    }
 
-                get("/ships", ShipsController::getShips)
+                    get("/ship", ShipController::getShip)
 
-                get("/ships/all", AllShipsController::getAllShips)
+                    get("/build", ConstructionController::getBuildInfo)
 
-                get("/nations", NationsController::getNations)
+                    get("/ships", ShipsController::getShips)
 
-                get("/equipment") {}
+                    get("/ships/all", AllShipsController::getAllShips)
 
-                get("/equipment/all", EquipmentsController::getEquipments)
+                    get("/nations", NationsController::getNations)
 
-                get("/equipment/types", EquipmentsController::getEquipmentTypes)
+                    get("/equipment") {}
+
+                    get("/equipment/all", EquipmentsController::getEquipments)
+
+                    get("/equipment/types", EquipmentsController::getEquipmentTypes)
+                }
+
             }
         }
     }
